@@ -1,0 +1,127 @@
+---
+title: PROYECTO DE DATASCIENCE CON METODOLOGIA CRISP-DM PARA EL MINISTERIO DE ECONOMIA
+  Y FINANZAS
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+---
+
+
+
+## COMPRESION DE LOS DATOS
+
+Comprender los datos es una fase importante,con el objetivo de establecer un primer contacto con el problema, familiarizarse con ellos, identificar su calidad y establecer las relaciones más evidentes que permitan definir las primeras hipótesis. Esta etapa se subdivide en tareas: 
+
+      -Recoleccion de datos
+      -Descripcion de los datos
+      -Exploracion de los datos
+      -Verificacion de la calidad de los datos
+    
+### Recoleccion de los datos
+Los datos utilizados en este proyecto son datos referentes de inversion publica en cuanto a proyectos que financia el [Ministerio Economia y Fianzas](https://www.mef.gob.pe/es/aplicativos-invierte-pe?id=4279)(MEF) que incluye la siguiente informacion sobre los proyectos como puede ser, el departamento donde se da, el distrito, la provincia, el ubigeo latitud, longitud, el centro poblado, la fuente de financiamiento, estado, el monto viable, etc.
+Todos los datos obtenido es gracias a MEF y a su sistema de informacion que utiliza para obtener sus fines necesarios, por lo que para esta proyecto, se utiliza, sólo la informacion que se ha obtenidode sus base de datos  para el año 2017
+
+***
+**Base de datos**: El SNIP cuenta con una base de datos estandarizada de información más relevante de proyectos que son formulados y evaluados por diferentes Unidades Formuladoras (UFs) y Evaluadoras (OPIs) del pa�???s y que puede ser consultada a través de nuestro sitio web por cualquier ciudadano que cuente con acceso a internet
+
+***
+
+### Descripcion de los datos
+
+Los datos se encuentran almacenados en un archivo con extension (.csv) y para fines de este proyecto se ha adecuado a una estructura ideal (data.frame) para poder trabajar y realizar las acciones necesaria, acontinuacion se describe:
+
+***
+|Campo|Tipo |Descripcion
+|-----|-----|-----------
+|Departamento|Discreto|Lista departamentos|
+|Provincia|Discreto|Lista provincias|
+|Distrito|Discreto|Lista distritos|
+|Ubigeo|Continuo||
+|Latitud|Continuo|Coordenada|
+|Longitud|Continuo| coordenada|
+|CentroPoblado|Discreto|Lista de poblaciones|
+|UnidadFormuladora|Discreto||
+|sector|Discreto| Tipo bobiernos|
+|Pliego|Discreto|Lista municipalidafes|
+|Ejecutora|Discreto|Lista de ejecutoras|
+|Nvel|Discreto||
+|Codigo_Snip|Continuo||
+|Codigo_Unico|Continuo||
+|Nombre_pip|Discreto||
+|Funcion|Discreto|educacion, vivienda, etc|
+|programa|discreto||
+|SubPrograma|Dscreto| detalle|
+|Fuente_Financiamiento|Discreto| detalles|
+|Fecha_Registro|continuo(compuesto)| fecha|
+|Situacion|Discreto| viable, no viable|
+|Estado|Discreto| activo, no acivo|
+|Cerrado|discreto| si, no|
+|Fecha_Viab|continuo(compuesto)|Fechas|
+|Monto_Viable|continuo|Monto Soles|
+|Beneficiario|Continuo|cantidad|
+|Objetivo|Discreto| observacion detallada|
+|Alternativa|Discreto||
+|Costto_actualizado|Continuo|Monto en soles
+
+***
+
+### Exploracion de los datos
+Una vez se han descrito los datos, se procede a explorarlos, esto implica aplicar pruebas estadisticas basicas que revelarán propiedades de los datos y crear tablas de frecuencua de graficos de distribucion de datos. Esta tarea sirve principalmente para determinar la consistencia  y completitud de los datos.
+Para lograr este fin, hemos utilizado  el paquete DPLYR de R para poder realizar las consultas respectivas al dataset y plasmarlas mediante gráficas utilizando el paquete GGPLOT2 de R.
+
+<!--1. Cargar las librerias respectivas -->
+```{r include=FALSE}
+library("dplyr")
+library("ggplot2")
+```
+
+<!--2. Lectura del dataset a un data.frame-->
+```{r include=FALSE}
+datos<- read.csv("C:/Users/sistemas/Desktop/PROYECTO/Project_DataSciece/dataset/pip.csv ", sep = ",")
+```
+
+
+<!--3. Graficos respectivos-->
+
+    El grafico 1: muestra la cantidad por programas por departamento
+    
+
+```{r echo=FALSE, message=TRUE}
+
+ggplot(datos,aes(x=DEPARTAMENTO,Y=DEPARTAMENTO, fill=DEPARTAMENTO, linetype=DEPARTAMENTO, expand=TRUE ))+geom_bar()+coord_flip()
+
+
+```
+
+    El grafico 2: muestra la cantidad de programas por costo
+
+
+```{r eval=FALSE, include=FALSE}
+  
+  ggplot(datos, aes(x=as.numeric(MONTO_VIABLE), fill=MONTO_VIABLE ))+geom_histogram(binwidth = 400)
+
+```
+
+
+
+    El grafico 3: muestra el monto de proyectos por departamento
+
+```{r echo=FALSE}
+ 
+ggplot(datos, aes(x=DEPARTAMENTO, y=MONTO_VIABLE,fill=DEPARTAMENTO))+geom_bar(stat="identity")+ coord_flip()
+
+```
+
+        Grafico 4: 
+        
+
+
+
+
+
+
+
+
+
+
